@@ -10,3 +10,13 @@ terraform {
 provider "aws" {
   region = "us-east-1"
 }
+
+terraform {
+  cloud {
+    organization = "adilk_terraform"
+
+    workspaces {
+      name = "AWS_INFRA_TEST"
+    }
+  }
+}
