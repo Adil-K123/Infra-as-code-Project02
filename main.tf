@@ -183,12 +183,4 @@
 #   auto_minor_version_upgrade  = false 
 # }
 
-# terraform {
-#   cloud {
-#     organization = "adilk_terraform"
 
-#     workspaces {
-#       name = "AWS_INFRA_TEST"
-#     }
-#   }
-# }
