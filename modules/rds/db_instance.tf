@@ -20,8 +20,8 @@ resource "aws_security_group" "Project02RDS_SG" {
 resource "aws_db_instance" "productreviewRDS" {
   allocated_storage    = "${var.allocated_storage}"
   storage_type         = "gp2"
-  db_name              = "${var.environment}_productreviewdb"
-  identifier           = "${var.environment}_productreviewdb" 
+  db_name              = "${var.environment}-productreviewdb"
+  identifier           = "${var.environment}-productreviewdb" 
   engine               = "mysql"
   engine_version       = "8.0.35"
   multi_az             = false
