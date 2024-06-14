@@ -1,5 +1,5 @@
 module "dev_vpc" {
-    source = "../modules/vpc"
+    source = "./modules/vpc"
     environment = "${var.environment}"
     mainvpc_cidr_block = "192.168.0.0/16"
     PublicSubnet1_cidr_block = "192.168.0.0/24"
@@ -8,14 +8,14 @@ module "dev_vpc" {
 }
 
 module "dev_ec2" {
-    source = "../modules/ec2"
+    source = "./modules/ec2"
     environment = "${var.environment}"
     mainvpcid = "${module.dev_vpc.mainvpcid}" 
     PublicSubnet1_id = "${module.dev_vpc.PublicSubnet1id}" 
 }
 
 module "dev_rds" {
-    source = "../modules/rds"
+    source = "./modules/rds"
     environment = "${var.environment}"
     mainvpcid = "${module.dev_vpc.mainvpcid}" 
     webserverSGid = "${module.dev_ec2.webserverSGid}"
