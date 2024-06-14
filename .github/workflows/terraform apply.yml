@@ -11,6 +11,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Create symlink to modules directory
+        run: ln -s ../modules ./dev/modules
+        if: ${{ github.workspace }}/modules != './dev/modules'
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
