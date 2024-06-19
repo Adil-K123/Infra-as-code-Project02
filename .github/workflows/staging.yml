@@ -1,12 +1,12 @@
-name: "Terraform-Infra-Apply-DevEnv"
+name: "Terraform-Infra-Apply-StagingEnv"
 
 on:
   push:
     branches:
-      - dev
+      - staging
   #pull_request:
     #branches:
-      #- dev
+      #- staging
 
 jobs:
   terraform:
@@ -16,8 +16,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Create symlink to modules directory
-        run: ln -s ../modules ./dev/modules
-        if: ${{ github.workspace }}/modules != './dev/modules'
+        run: ln -s ../modules ./staging/modules
+        if: ${{ github.workspace }}/modules != './staging/modules'
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
@@ -25,12 +25,13 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init
-        working-directory: ./dev
+        working-directory: ./staging
       - name: Terraform Plan
         id: plan
         run: terraform plan
-        working-directory: ./dev 
+        working-directory: ./staging 
       - name: Terraform apply
         id: apply
         run: terraform apply --auto-approve
-        working-directory: ./dev
+        working-directory: ./staging
+

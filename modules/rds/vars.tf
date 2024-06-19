@@ -1,35 +1,35 @@
 variable "environment" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "mainvpcid" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "webserverSGid" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "allocated_storage" {
-  type = number
+  type    = number
   default = 20
 }
 
 variable "dbusername" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "dbpassword" {
-  type = string
+  type      = string
   sensitive = true
-  default = ""
+  default   = ""
 }
 
 variable "dbsubnetgroupname" {
-  type = string
+  type    = string
   default = ""
 }
