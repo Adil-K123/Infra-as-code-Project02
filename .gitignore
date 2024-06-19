@@ -1,2 +1,4 @@
 #Secret variable file
 dev/secrets.tfvars
+staging/secrets.tfvars
+prod/secrets.tfvars
