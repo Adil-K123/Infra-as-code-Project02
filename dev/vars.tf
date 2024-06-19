@@ -4,9 +4,13 @@ variable "environment" {
 }
 
 variable "dbusername" {
-  default = "adilk"
+  type = string
+  default = ""
+  sensitive = true
 }
 
 variable "dbpassword" {
-  default = "Sql12345"
+  type = string
+  default = ""
+  sensitive = true
 }
