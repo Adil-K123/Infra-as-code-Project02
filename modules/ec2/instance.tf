@@ -1,7 +1,7 @@
 resource "aws_security_group" "Project02WebServer_SG" {
   name        = "${var.environment}_Project02WebServer_SG"
   description = "security group for ${var.environment} webservers"
-  vpc_id      = "${var.mainvpcid}"
+  vpc_id      = var.mainvpcid
 
   ingress {
     description      = "HTTPS"
@@ -48,17 +48,18 @@ resource "tls_private_key" "key" {
 }
 
 resource "aws_key_pair" "Webserver-ssh-key" {
-  key_name = "${var.environment}_Webserver-ssh-key"
+  key_name   = "${var.environment}_Webserver-ssh-key"
   public_key = tls_private_key.key.public_key_openssh
 }
 
 resource "aws_instance" "Webserver" {
-  ami           = "ami-04b70fa74e45c3917"
-  instance_type = "t2.micro"
-  vpc_security_group_ids = [aws_security_group.Project02WebServer_SG.id]
-  key_name = aws_key_pair.Webserver-ssh-key.key_name
-  subnet_id     = "${var.PublicSubnet1_id}"
+  ami                         = "ami-04b70fa74e45c3917"
+  instance_type               = "t2.micro"
+  vpc_security_group_ids      = [aws_security_group.Project02WebServer_SG.id]
+  key_name                    = aws_key_pair.Webserver-ssh-key.key_name
+  subnet_id                   = var.PublicSubnet1_id
   associate_public_ip_address = true
+  count                       = var.Ec2InstanceCount
   tags = {
     Name = "${var.environment}WebServer"
   }

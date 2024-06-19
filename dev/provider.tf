@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source  = "hashicorp/aws"
       version = "5.53.0"
     }
   }
@@ -16,7 +16,7 @@ terraform {
     organization = "adilk_terraform"
 
     workspaces {
-      name = "AWS_INFRA_TEST"
+      name = "dev_environment"
     }
   }
 }
