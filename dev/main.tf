@@ -19,8 +19,8 @@ module "dev_rds" {
     environment = "${var.environment}"
     mainvpcid = "${module.dev_vpc.mainvpcid}" 
     webserverSGid = "${module.dev_ec2.webserverSGid}"
-    dbusername = "${var.dbusername}"
-    dbpassword = "${var.dbpassword}"
+    dbusername = var.dbusername
+    dbpassword = var.dbpassword
     dbsubnetgroupname = "${module.dev_vpc.dbsubnetgroupname}"
 }
 
