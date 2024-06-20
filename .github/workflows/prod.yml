@@ -1,0 +1,37 @@
+name: "Terraform-Infra-Apply-ProdEnv"
+
+on:
+  push:
+    branches:
+      - main
+  #pull_request:
+    #branches:
+      #- main
+
+jobs:
+  terraform:
+    name: "Terraform"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Create symlink to modules directory
+        run: ln -s ../modules ./prod/modules
+        if: ${{ github.workspace }}/modules != './prod/modules'
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+            cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+      - name: Terraform Init
+        id: init
+        run: terraform init
+        working-directory: ./prod
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan
+        working-directory: ./prod 
+      - name: Terraform apply
+        id: apply
+        run: terraform apply --auto-approve
+        working-directory: ./prod
+
