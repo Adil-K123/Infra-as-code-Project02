@@ -16,7 +16,7 @@ terraform {
     organization = "adilk_terraform"
 
     workspaces {
-      name = "dev_environment"
+      name = "staging_environment"
     }
   }
 }

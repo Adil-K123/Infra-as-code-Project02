@@ -1,6 +1,11 @@
 variable "environment" {
   type    = string
-  default = "dev"
+  default = "staging"
+}
+
+variable "Ec2InstanceCount" {
+  type    = number
+  default = 2
 }
 
 variable "dbusername" {
