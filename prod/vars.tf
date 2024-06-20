@@ -1,6 +1,6 @@
 variable "environment" {
   type    = string
-  default = "staging"
+  default = "prod"
 }
 
 variable "Ec2InstanceCount" {
