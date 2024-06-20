@@ -3,10 +3,10 @@ name: "Terraform-Infra-Apply-ProdEnv"
 on:
   push:
     branches:
-      - main
+      - prod
   #pull_request:
     #branches:
-      #- main
+      #- prod
 
 jobs:
   terraform:
