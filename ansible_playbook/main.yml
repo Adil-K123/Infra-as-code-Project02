@@ -1,0 +1,74 @@
+---
+
+- hosts: EC2_WebServers
+  become: true
+  pre_tasks:
+    - name: Update and Upgrade
+      tags: always
+      apt:
+        upgrade: dist
+        update_cache: yes
+
+  tasks:
+    - name: Install packages
+      tags: nginx,python3-venv,python3-pip,mysql-client
+      apt:
+        name:
+          - nginx
+          - python3-venv
+          - python3-pip
+          - mysql-client
+        state: latest
+        update_cache: yes
+
+    - name: Configure nginx
+      tags: nginx,configure nginx,sites-available
+      copy:
+        dest: /etc/nginx/sites-available/default
+        content: |
+          upstream productreview {
+             server 127.0.0.1:8000;
+          }
+          server {
+	           listen 80 default_server;
+	           listen [::]:80 default_server;
+             root /var/www/html;
+             server_name _;
+             location / {
+		         # First attempt to serve request as file, then
+		         # as directory, then fall back to displaying a 404.
+		         proxy_pass http://productreview;
+	           }
+          }
+        backup: yes
+      notify: Restart and enable nginx
+
+    - name: Create systemd service file for application
+      tags: systemd,service,gunicorn
+      copy:
+        dest: /etc/systemd/system/productreview_app.service
+        content: |
+          [Unit]
+          Description=Gunicorn instance for Product Review App
+          After=network.target
+          [Service]
+          User=ubuntu
+          Group=www-data
+          WorkingDirectory=/home/ubuntu/App_code-Project02
+          EnvironmentFile=/etc/productreview_app.env
+          ExecStart=/home/ubuntu/App_code-Project02/.venv/bin/gunicorn -b localhost:8000 app:app
+          Restart=always
+          [Install]
+          WantedBy=multi-user.target
+      
+
+  handlers:
+    - name: Restart and enable nginx
+      service:
+        name: nginx
+        state: restarted
+        enabled: yes
+
+
+    
+
