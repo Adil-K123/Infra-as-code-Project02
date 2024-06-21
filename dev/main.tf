@@ -24,3 +24,4 @@ module "dev_rds" {
     dbsubnetgroupname = "${module.dev_vpc.dbsubnetgroupname}"
 }
 
+
