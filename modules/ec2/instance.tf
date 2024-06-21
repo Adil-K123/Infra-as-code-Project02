@@ -43,20 +43,20 @@ resource "aws_security_group" "Project02WebServer_SG" {
   }
 }
 
-resource "tls_private_key" "key" {
-  algorithm = "RSA"
-}
+# resource "tls_private_key" "key" {
+#   algorithm = "RSA"
+# }
 
-resource "aws_key_pair" "Webserver-ssh-key" {
-  key_name   = "${var.environment}_Webserver-ssh-key"
-  public_key = tls_private_key.key.public_key_openssh
-}
+# resource "aws_key_pair" "Webserver-ssh-key" {
+#   key_name   = "${var.environment}_Webserver-ssh-key"
+#   public_key = tls_private_key.key.public_key_openssh
+# }
 
 resource "aws_instance" "Webserver" {
   ami                         = "ami-04b70fa74e45c3917"
   instance_type               = "t2.micro"
   vpc_security_group_ids      = [aws_security_group.Project02WebServer_SG.id]
-  key_name                    = aws_key_pair.Webserver-ssh-key.key_name
+  key_name                    = "flask_ec2"
   subnet_id                   = var.PublicSubnet1_id
   associate_public_ip_address = true
   count                       = var.Ec2InstanceCount
