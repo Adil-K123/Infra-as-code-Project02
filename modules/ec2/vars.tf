@@ -17,3 +17,8 @@ variable "Ec2InstanceCount" {
   type    = number
   default = 1
 }
+
+variable "inventoryfilename" {
+  type = string
+  default = ""
+}

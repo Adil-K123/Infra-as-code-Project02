@@ -11,7 +11,8 @@ module "dev_ec2" {
     source = "./modules/ec2"
     environment = "${var.environment}"
     mainvpcid = "${module.dev_vpc.mainvpcid}" 
-    PublicSubnet1_id = "${module.dev_vpc.PublicSubnet1id}" 
+    PublicSubnet1_id = "${module.dev_vpc.PublicSubnet1id}"
+    inventoryfilename = "${path.module}/inventory/hosts.cfg"
 }
 
 module "dev_rds" {

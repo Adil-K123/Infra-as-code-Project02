@@ -4,5 +4,5 @@ resource "local_file" "inventory" {
         webServers = aws_instance.Webserver.*.associate_public_ip_address
      }
     )
-    filename = "${path.module}/inventory/hosts.cfg"
+    filename = "${var.inventoryfilename}"
 }
