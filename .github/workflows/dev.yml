@@ -46,5 +46,5 @@ jobs:
       - name: Deploy necessary applications to webservers with playbook
         run: |
            ansible-playbook -i ${{ github.workspace }}/dev/inventory/hosts.cfg -u ${{ secrets.webserver_user }} main.yml
-           working-directory: ./ansible_playbook
+        working-directory: ./ansible_playbook
           
