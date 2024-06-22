@@ -52,11 +52,11 @@ jobs:
            chmod 600 ~/.ssh/id_rsa
       - name: Generate Ansible Dynamic Inventory
         run: |
-          ansible-inventory -i ${{ github.workspace }}/dev/inventory/hosts.yaml --list
-          ansible-inventory -i ${{ github.workspace }}/dev/inventory/hosts.yaml --graph
+          ansible-inventory -i ${{ github.workspace }}/dev/inventory/hosts.yaml --list -vvv
+          ansible-inventory -i ${{ github.workspace }}/dev/inventory/hosts.yaml --graph -vvv
         working-directory: ./ansible_playbook
       - name: Deploy necessary applications to webservers with playbook
         run: |
-           ansible-playbook -i ${{ github.workspace }}/dev/inventory/hosts.yaml -u ${{ secrets.webserver_user }} main.yml
+           ansible-playbook -i ${{ github.workspace }}/dev/inventory/hosts.yaml -u ${{ secrets.webserver_user }} main.yml -vvv
         working-directory: ./ansible_playbook
           
