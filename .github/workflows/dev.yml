@@ -54,7 +54,7 @@ jobs:
         run: |
           ansible-inventory -i ${{ github.workspace }}/dev/inventory/hosts.yml --list
           ansible-inventory -i ${{ github.workspace }}/dev/inventory/hosts.yml --graph
-          working-directory: ${{ github.workspace }}
+        working-directory: ${{ github.workspace }}
       - name: Deploy necessary applications to webservers with playbook
         run: |
            ansible-playbook -i ${{ github.workspace }}/dev/inventory/hosts.yml -u ${{ secrets.webserver_user }} main.yml
