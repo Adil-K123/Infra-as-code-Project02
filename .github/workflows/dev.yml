@@ -33,20 +33,30 @@ jobs:
         working-directory: ./dev 
       - name: Terraform apply
         id: apply
-        run: terraform apply --auto-approve -var="inventoryfilename=${{ github.workspace }}/dev/inventory/hosts.cfg"
+        run: terraform apply --auto-approve 
         working-directory: ./dev
-      - name: Install Ansible and store ssh key in runner
+      - name: Configure AWS credentials
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID && aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+      - name: Install Ansible,boto and store ssh key in runner
         run: |
            python -m pip install --upgrade pip
-           pip install ansible
+           pip3 install ansible
+           pip3 install boto3
            mkdir -p /home/runner/.ssh/
            touch /home/runner/.ssh/config
            touch /home/runner/.ssh/id_rsa
            echo -e "${{ secrets.ANSIBLE_SSH_KEY }}" > /home/runner/.ssh/id_rsa
            chmod 600 ~/.ssh/id_rsa
+      - name: Generate Ansible Dynamic Inventory
+        run: |
+          ansible-inventory -i ${{ github.workspace }}/dev/inventory/hosts.yml --list
+          ansible-inventory -i ${{ github.workspace }}/dev/inventory/hosts.yml --graph
+          working-directory: ${{ github.workspace }}
       - name: Deploy necessary applications to webservers with playbook
         run: |
-           cat ${{ github.workspace }}/dev/inventory/hosts.cfg
-           ansible-playbook -i ${{ github.workspace }}/dev/inventory/hosts.cfg -u ${{ secrets.webserver_user }} main.yml
+           ansible-playbook -i ${{ github.workspace }}/dev/inventory/hosts.yml -u ${{ secrets.webserver_user }} main.yml
         working-directory: ./ansible_playbook
           

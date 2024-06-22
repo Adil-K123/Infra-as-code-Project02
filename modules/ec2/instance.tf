@@ -61,7 +61,7 @@ resource "aws_instance" "Webserver" {
   associate_public_ip_address = true
   count                       = var.Ec2InstanceCount
   tags = {
-    Name = "${var.environment}WebServer${count.index + 1}"
+    Name = "${var.environment}WebServers"
   }
 }
 

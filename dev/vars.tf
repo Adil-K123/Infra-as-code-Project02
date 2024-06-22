@@ -13,7 +13,7 @@ variable "dbpassword" {
   sensitive = true
 }
 
-variable "inventoryfilename" {
-  type = string
-  default = ""
-}
+# variable "inventoryfilename" {
+#   type = string
+#   default = ""
+# }
