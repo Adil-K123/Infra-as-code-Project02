@@ -12,3 +12,8 @@ variable "dbpassword" {
   default   = ""
   sensitive = true
 }
+
+variable "inventoryfilename" {
+  type = string
+  default = ""
+}

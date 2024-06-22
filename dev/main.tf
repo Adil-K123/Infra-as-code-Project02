@@ -12,7 +12,7 @@ module "dev_ec2" {
     environment = "${var.environment}"
     mainvpcid = "${module.dev_vpc.mainvpcid}" 
     PublicSubnet1_id = "${module.dev_vpc.PublicSubnet1id}"
-    inventoryfilename = "${{ github.workspace }}/dev/inventory/hosts.cfg"
+    inventoryfilename = "${var.inventoryfilename}"
     webServers_PublicIP = "${module.dev_ec2.webServers_PublicIP}"
 }
 
