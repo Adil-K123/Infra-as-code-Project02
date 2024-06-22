@@ -33,7 +33,7 @@ jobs:
         working-directory: ./dev 
       - name: Terraform apply
         id: apply
-        run: terraform apply --auto-approve -var="inventoryfilename={{ github.workspace }}/dev/inventory/hosts.cfg"
+        run: terraform apply --auto-approve -var="inventoryfilename=${{ github.workspace }}/dev/inventory/hosts.cfg"
         working-directory: ./dev
       - name: Install Ansible and store ssh key in runner
         run: |
