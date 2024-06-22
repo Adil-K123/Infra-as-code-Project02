@@ -22,3 +22,7 @@ variable "inventoryfilename" {
   type = string
   default = ""
 }
+
+variable "webServers_PublicIP" {
+  default = ""
+}

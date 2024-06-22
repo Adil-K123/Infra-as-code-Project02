@@ -1,7 +1,7 @@
 resource "local_file" "inventory" {
     content = templatefile("${path.module}/templates/inventory.tpl",
      {
-        webServers = aws_instance.Webserver.*.public_ip
+        webServers = "${var.webServers_PublicIP}"
      }
     )
     filename = "${var.inventoryfilename}"
