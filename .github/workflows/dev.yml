@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - dev
+      - FeatureBranch1
   #pull_request:
     #branches:
       #- dev
