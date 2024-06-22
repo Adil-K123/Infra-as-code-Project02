@@ -46,6 +46,7 @@ jobs:
            chmod 600 ~/.ssh/id_rsa
       - name: Deploy necessary applications to webservers with playbook
         run: |
+           cat ${{ github.workspace }}/dev/inventory/hosts.cfg
            ansible-playbook -i ${{ github.workspace }}/dev/inventory/hosts.cfg -u ${{ secrets.webserver_user }} main.yml
         working-directory: ./ansible_playbook
           
