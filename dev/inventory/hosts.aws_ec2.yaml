@@ -13,4 +13,4 @@ keyed_groups:
     prefix: aws_region
 
 hostnames:
-  - network_interfaces.association.public_ip
+  - name: 'public_ip'
