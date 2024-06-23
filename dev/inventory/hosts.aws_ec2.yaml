@@ -11,3 +11,6 @@ keyed_groups:
     key: instance_type
   - key: placement.region
     prefix: aws_region
+
+hostnames:
+  - network_interfaces.association.public_ip
