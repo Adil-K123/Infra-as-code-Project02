@@ -48,8 +48,8 @@ jobs:
            mkdir -p /home/runner/.ssh/
            touch /home/runner/.ssh/config
            touch /home/runner/.ssh/id_rsa
-           echo -e "${{ secrets.ANSIBLE_SSH_KEY }}" > /home/runner/.ssh/id_rsa
-           chmod 600 ~/.ssh/id_rsa
+           echo -e "${{ secrets.ANSIBLE_SSH_KEY }}" > /home/runner/.ssh/flask_ec2.pem
+           chmod 600 ~/.ssh/flask_ec2.pem
       - name: Generate Ansible Dynamic Inventory
         run: |
           ansible-inventory -i ${{ github.workspace }}/dev/inventory/hosts.aws_ec2.yaml --list -vvv
@@ -57,6 +57,6 @@ jobs:
         working-directory: ./ansible_playbook
       - name: Deploy necessary applications to webservers with playbook
         run: |
-           ansible-playbook -i ${{ github.workspace }}/dev/inventory/hosts.aws_ec2.yaml -u ${{ secrets.webserver_user }} main.yml -vvv
+           ansible-playbook -i ${{ github.workspace }}/dev/inventory/hosts.aws_ec2.yaml -u ${{ secrets.webserver_user }} --private-key=/home/runner/.ssh/flask_ec2.pem -vvv
         working-directory: ./ansible_playbook
           
