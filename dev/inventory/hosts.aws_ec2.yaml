@@ -12,5 +12,3 @@ keyed_groups:
   - key: placement.region
     prefix: aws_region
 
-hostnames:
-  - public_ip_address
