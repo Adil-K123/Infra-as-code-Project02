@@ -12,6 +12,5 @@ keyed_groups:
   - key: placement.region
     prefix: aws_region
 
-compose:
-
-ansible_host: public_ip
+hostnames:
+  - public_ip_address
