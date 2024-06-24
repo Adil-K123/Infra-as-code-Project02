@@ -10,6 +10,7 @@ module "dev_vpc" {
 module "dev_ec2" {
     source = "./modules/ec2"
     environment = "${var.environment}"
+    Ec2InstanceCount = 2
     mainvpcid = "${module.dev_vpc.mainvpcid}" 
     PublicSubnet1_id = "${module.dev_vpc.PublicSubnet1id}"
 }
@@ -17,7 +18,6 @@ module "dev_ec2" {
 module "dev_rds" {
     source = "./modules/rds"
     environment = "${var.environment}"
-    Ec2InstanceCount = 2
     mainvpcid = "${module.dev_vpc.mainvpcid}" 
     webserverSGid = "${module.dev_ec2.webserverSGid}"
     dbusername = var.dbusername
