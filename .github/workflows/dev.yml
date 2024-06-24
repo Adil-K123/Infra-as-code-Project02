@@ -57,6 +57,6 @@ jobs:
         working-directory: ./ansible_playbook
       - name: Deploy necessary applications to webservers with playbook
         run: |
-           ansible-playbook -i ${{ github.workspace }}/dev/inventory/hosts.aws_ec2.yaml -u ${{ secrets.webserver_user }} --private-key=/home/runner/.ssh/flask_ec2.pem main.yml --limit tag_Name_devWebServer*
+           ansible-playbook -i ${{ github.workspace }}/ansible_playbook/inventory/hosts.aws_ec2.yaml -u ${{ secrets.webserver_user }} --private-key=/home/runner/.ssh/flask_ec2.pem main.yml --limit tag_Name_devWebServer*
         working-directory: ./ansible_playbook
           
