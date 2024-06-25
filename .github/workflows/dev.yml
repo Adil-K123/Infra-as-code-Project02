@@ -39,6 +39,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
         run: aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID && aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
       - name: Install Ansible,boto and store ssh key in runner
         run: |
@@ -52,8 +53,8 @@ jobs:
            chmod 600 ~/.ssh/flask_ec2.pem
       - name: Fetch RDS endpoint from AWS
         run: |
-           rds_endpoint=$(aws rds --region us-east-1 describe-db-instances --db-instance-identifier devproductreviewdb --query 'DBInstances[*].Endpoint.Address' --output text) 
-           echo "::set-env name=RDS_ENDPOINT::${rds_endpoint}"
+           rds_endpoint=$(aws rds describe-db-instances --db-instance-identifier devproductreviewdb --query 'DBInstances[*].Endpoint.Address' --output text) 
+           echo "RDS_ENDPOINT=${rds_endpoint}" >> $GITHUB_ENV
       - name: Deploy necessary applications to webservers and configure RDS mysql with playbook
         env:
            RDS_ENDPOINT: ${{ env.RDS_ENDPOINT }}
