@@ -77,7 +77,7 @@
     - name: create rds sql database and required table from first webserver
       tags: sql,db,rds
       shell: |
-         mysql -h{{ rds_endpoint }} -u{{dbusername}} -p{{dbpassword}}
+         mysql -h{{ rds_endpoint }} -u{{ dbusername }} -p{{ dbpassword }}
          CREATE DATABASE product_reviews;
          USE product_reviews;
          CREATE TABLE reviews (
