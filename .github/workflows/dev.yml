@@ -53,8 +53,8 @@ jobs:
            chmod 600 ~/.ssh/flask_ec2.pem
       - name : view Ansible AWS inventory
         run: |	        
-           ansible-inventory -i ${{ github.workspace }}/dev/inventory/hosts.aws_ec2.yaml --list -vvv	           
-           ansible-inventory -i ${{ github.workspace }}/dev/inventory/hosts.aws_ec2.yaml --graph -vvv	           
+           ansible-inventory -i ${{ github.workspace }}/ansible_playbook/inventory/hosts.aws_ec2.yaml --list -vvv	           
+           ansible-inventory -i ${{ github.workspace }}/ansible_playbook/inventory/hosts.aws_ec2.yaml --graph -vvv	           
         working-directory: ./ansible_playbook
       - name: Fetch RDS endpoint from AWS
         run: |
