@@ -51,6 +51,11 @@ jobs:
            touch /home/runner/.ssh/id_rsa
            echo -e "${{ secrets.ANSIBLE_SSH_KEY }}" > /home/runner/.ssh/flask_ec2.pem
            chmod 600 ~/.ssh/flask_ec2.pem
+      - name : view Ansible AWS inventory
+        run: |	        
+           ansible-inventory -i ${{ github.workspace }}/dev/inventory/hosts.aws_ec2.yaml --list -vvv	           
+           ansible-inventory -i ${{ github.workspace }}/dev/inventory/hosts.aws_ec2.yaml --graph -vvv	           
+        working-directory: ./ansible_playbook
       - name: Fetch RDS endpoint from AWS
         run: |
            rds_endpoint=$(aws rds --region us-east-1 describe-db-instances --db-instance-identifier devproductreviewdb --query 'DBInstances[*].Endpoint.Address' --output text) 
