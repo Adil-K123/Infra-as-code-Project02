@@ -1,4 +1,4 @@
-name: "Terraform-Infra-Apply-DevEnv"
+name: "Terraform-Infra-Apply-dev_env"
 
 on:
   push:
@@ -13,42 +13,46 @@ jobs:
   terraform:
     name: "Terraform"
     runs-on: ubuntu-latest
+    env:
+       ENVIRONMENT: dev
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Create symlink to modules directory
-        run: ln -s ../modules ./dev/modules
-        if: ${{ github.workspace }}/modules != './dev/modules'
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
             cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Create symlink to modules directory
+        run: ln -s ../modules ./$ENVIRONMENT/modules
+        if: ${{ github.workspace }}/modules != './$ENVIRONMENT/modules'
       - name: Terraform Init
         id: init
         run: terraform init
-        working-directory: ./dev
+        working-directory: ./$ENVIRONMENT
       - name: Terraform Plan
         id: plan
         run: terraform plan
-        working-directory: ./dev 
+        working-directory: ./$ENVIRONMENT 
       - name: Terraform apply
         id: apply
         run: terraform apply --auto-approve 
-        working-directory: ./dev
-      # - name: Configure AWS credentials
-      #   env:
-      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     AWS_DEFAULT_REGION: us-east-1
-      #   run: aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID && aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY && aws configure set aws_default_region $AWS_DEFAULT_REGION
-      # - name: Install Ansible,boto and store ssh key in runner
-      #   run: |
-      #      python -m pip install --upgrade pip
-      #      pip3 install ansible
-      #      pip3 install boto3
-      #      mkdir -p /home/runner/.ssh/
-      #      touch /home/runner/.ssh/config
-      #      touch /home/runner/.ssh/id_rsa
-      #      echo -e "${{ secrets.ANSIBLE_SSH_KEY }}" > /home/runner/.ssh/flask_ec2.pem
-      #      chmod 600 ~/.ssh/flask_ec2.pem
-      
+        working-directory: ./$ENVIRONMENT
+
+      - name: Create symlink to modules directory from shared directory
+        run: ln -s ../modules ./shared/modules
+        if: ${{ github.workspace }}/modules != './shared/modules'
+      - name: Terraform Init
+        id: shared_init
+        run: terraform init
+        working-directory: ./shared
+      - name: Terraform Plan
+        id: shared_plan
+        run: terraform plan
+        working-directory: ./shared
+      - name: Terraform apply
+        id: shared_apply
+        run: terraform apply --auto-approve 
+        working-directory: ./shared
+     
