@@ -30,15 +30,15 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init
-        working-directory: ./$ENVIRONMENT
+        working-directory: $ENVIRONMENT
       - name: Terraform Plan
         id: plan
         run: terraform plan
-        working-directory: ./$ENVIRONMENT 
+        working-directory: $ENVIRONMENT 
       - name: Terraform apply
         id: apply
         run: terraform apply --auto-approve 
-        working-directory: ./$ENVIRONMENT
+        working-directory: $ENVIRONMENT
 
       - name: Create symlink to modules directory from shared directory
         run: ln -s ../modules ./shared/modules
