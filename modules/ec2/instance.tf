@@ -56,6 +56,7 @@ resource "aws_instance" "Webserver" {
   ami                         = "ami-04b70fa74e45c3917"
   instance_type               = "t2.micro"
   vpc_security_group_ids      = [aws_security_group.Project02WebServer_SG.id]
+  iam_instance_profile        = data.aws_iam_instance_profile.ec2_instance_profile.name
   key_name                    = "flask_ec2"
   subnet_id                   = var.PublicSubnet1_id
   associate_public_ip_address = true

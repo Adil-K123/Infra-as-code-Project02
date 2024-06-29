@@ -24,6 +24,22 @@ jobs:
         with:
             cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
+      - name: Create symlink to modules directory from shared directory
+        run: ln -s ../modules ./shared/modules
+        if: ${{ github.workspace }}/modules != './shared/modules'
+      - name: Terraform Init shared resources
+        id: shared_init
+        run: terraform init
+        working-directory: ./shared
+      - name: Terraform Plan shared resources
+        id: shared_plan
+        run: terraform plan
+        working-directory: ./shared
+      - name: Terraform apply shared resources
+        id: shared_apply
+        run: terraform apply --auto-approve 
+        working-directory: ./shared
+
       - name: Create symlink to modules directory
         run: ln -s ../modules ./$ENVIRONMENT/modules
         if: ${{ github.workspace }}/modules != './$ENVIRONMENT/modules'
@@ -45,19 +61,5 @@ jobs:
           terraform apply --auto-approve
         #working-directory: $ENVIRONMENT
 
-      - name: Create symlink to modules directory from shared directory
-        run: ln -s ../modules ./shared/modules
-        if: ${{ github.workspace }}/modules != './shared/modules'
-      - name: Terraform Init
-        id: shared_init
-        run: terraform init
-        working-directory: ./shared
-      - name: Terraform Plan
-        id: shared_plan
-        run: terraform plan
-        working-directory: ./shared
-      - name: Terraform apply
-        id: shared_apply
-        run: terraform apply --auto-approve 
-        working-directory: ./shared
+
      
