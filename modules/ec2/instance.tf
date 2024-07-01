@@ -30,6 +30,24 @@ resource "aws_security_group" "Project02WebServer_SG" {
     ipv6_cidr_blocks = ["::/0"]
   }
 
+  ingress {
+    description      = "nginx_prometheus_exporter"
+    from_port        = 9113
+    to_port          = 9113
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  ingress {
+    description      = "flask_app_for_prometheus"
+    from_port        = 8000
+    to_port          = 8000
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
   egress {
     from_port        = 0
     to_port          = 0
