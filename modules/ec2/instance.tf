@@ -119,6 +119,7 @@ resource "aws_instance" "Webserver" {
   count                       = var.Ec2InstanceCount
   tags = {
     Name = "${var.environment}WebServer${count.index + 1}"
+    Groups = "${var.environment}WebServers"
   }
 }
 
