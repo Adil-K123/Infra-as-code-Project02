@@ -1,10 +1,10 @@
-module "shared_ecr" {
-    source = "./modules/ecr"
-}
+# module "shared_ecr" {
+#     source = "./modules/ecr"
+# }
 
-module "iam_roles" {
-    source = "./modules/iam"
-}
+# module "iam_roles" {
+#     source = "./modules/iam"
+# }
 
 # module "shared_vpc" {
 #     source = "./modules/vpc"
