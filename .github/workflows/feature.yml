@@ -3,11 +3,11 @@ name: "Terraform-Infra-Apply-dev_env"
 on:
   push:
     branches:
-      - dev
+      - FeatureBranch1
 
 jobs:
   Terraform_resource_creation:
-    name: "Terraform_resource_creation"
+    name: "Terraform_resource_Plan"
     runs-on: ubuntu-latest
     env:
        ENVIRONMENT: dev
@@ -31,10 +31,6 @@ jobs:
         id: shared_plan
         run: terraform plan
         working-directory: ./shared
-      - name: Terraform apply shared resources
-        id: shared_apply
-        run: terraform apply --auto-approve 
-        working-directory: ./shared
 
       - name: Create symlink to modules directory
         run: ln -s ../modules ./$ENVIRONMENT/modules
@@ -49,10 +45,6 @@ jobs:
         run: |
           cd ${{ github.workspace }}/$ENVIRONMENT  
           terraform plan
-      - name: Terraform apply
-        run: |
-          cd ${{ github.workspace }}/$ENVIRONMENT  
-          terraform apply --auto-approve
 
 
      
