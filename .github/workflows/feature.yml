@@ -1,4 +1,4 @@
-name: "Terraform-Infra-Apply-dev_env"
+name: "Terraform-Infra-Plan-env"
 
 on:
   push:
