@@ -18,11 +18,11 @@ variable "Ec2InstanceCount" {
   default = 1
 }
 
-variable "inventoryfilename" {
-  type = string
-  default = ""
-}
+# variable "inventoryfilename" {
+#   type = string
+#   default = ""
+# }
 
-variable "webServers_PublicIP" {
-  default = ""
-}
+# variable "webServers_PublicIP" {
+#   default = ""
+# }
