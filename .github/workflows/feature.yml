@@ -37,19 +37,19 @@ jobs:
         working-directory: ./shared
 
       - name: Create symlink to modules directory
-        run: ln -s ../modules ./$ENVIRONMENT/modules
-        if: ${{ github.workspace }}/modules != './$ENVIRONMENT/modules'
+        run: ln -s ../modules ./${{ env.ENVIRONMENT }}/modules
+        if: ${{ github.workspace }}/modules != './${{ env.ENVIRONMENT }}/modules'
       - name: Terraform Init
         id: init
         run: terraform init
-        working-directory: ./$ENVIRONMENT         
+        working-directory: ./${{ env.ENVIRONMENT }}         
       - name: Terraform Plan
         id: plan
         run: terraform plan
-        working-directory: ./$ENVIRONMENT
+        working-directory: ./${{ env.ENVIRONMENT }}
       - name: Terraform apply
         run: terraform apply --auto-approve
-        working-directory: ./$ENVIRONMENT
+        working-directory: ./${{ env.ENVIRONMENT }}
 
 
      
