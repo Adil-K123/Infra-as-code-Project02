@@ -34,7 +34,7 @@ variable "PrivateSubnet2" {
 
 variable "Ec2InstanceCount" {
   type    = number
-  default = ""
+  default = 0
 }
 
 variable "dbusername" {
