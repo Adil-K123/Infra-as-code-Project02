@@ -5,54 +5,44 @@ on:
     branches:
       - dev
 
+env:
+  ENVIRONMENT: dev
+  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+  AWS_DEFAULT_REGION: us-east-1
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
 jobs:
   Terraform_resource_creation:
     name: "Terraform_resource_creation"
     runs-on: ubuntu-latest
-    env:
-       ENVIRONMENT: dev
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      # - name: Destroy all images in the repo               #use this before destroying ecr repo to clear all images
+      #   run: |
+      #     pip3 install boto3
+      #     python3 clear_ecr_repo.py
+      #   working-directory: python_scripts
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
             cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-
-      - name: Create symlink to modules directory from shared directory
-        run: ln -s ../modules ./shared/modules
-        if: ${{ github.workspace }}/modules != './shared/modules'
-      - name: Terraform Init shared resources
-        id: shared_init
-        run: terraform init
-        working-directory: ./shared
-      - name: Terraform Plan shared resources
-        id: shared_plan
-        run: terraform plan
-        working-directory: ./shared
-      - name: Terraform apply shared resources
-        id: shared_apply
-        run: terraform apply --auto-approve 
-        working-directory: ./shared
-
       - name: Create symlink to modules directory
-        run: ln -s ../modules ./$ENVIRONMENT/modules
-        if: ${{ github.workspace }}/modules != './$ENVIRONMENT/modules'
+        run: ln -s ../modules ./${{ env.ENVIRONMENT }}/modules
+        if: ${{ github.workspace }}/modules != './${{ env.ENVIRONMENT }}/modules'
       - name: Terraform Init
         id: init
-        run: |
-          cd ${{ github.workspace }}/$ENVIRONMENT  
-          terraform init
+        run: terraform init
+        working-directory: ./${{ env.ENVIRONMENT }}         
       - name: Terraform Plan
         id: plan
-        run: |
-          cd ${{ github.workspace }}/$ENVIRONMENT  
-          terraform plan
+        run: terraform plan
+        working-directory: ./${{ env.ENVIRONMENT }}
       - name: Terraform apply
-        run: |
-          cd ${{ github.workspace }}/$ENVIRONMENT  
-          terraform apply --auto-approve
+        run: terraform apply --auto-approve
+        working-directory: ./${{ env.ENVIRONMENT }}
 
 
      

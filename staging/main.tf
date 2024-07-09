@@ -1,10 +1,10 @@
 module "staging_vpc" {
-  source                    = "./modules/vpc"
-  environment               = var.environment
-  mainvpc_cidr_block        = "10.1.0.0/16"
-  PublicSubnet1_cidr_block  = "10.1.0.0/24"
-  PrivateSubnet1_cidr_block = "10.1.1.0/24"
-  PrivateSubnet2_cidr_block = "10.1.2.0/24"
+  source             = "./modules/vpc"
+  environment        = var.environment
+  mainvpc_cidr_block = var.mainvpc_cidr_block
+  PublicSubnet1      = var.PublicSubnet1
+  PrivateSubnet1     = var.PrivateSubnet1
+  PrivateSubnet2     = var.PrivateSubnet2
 }
 
 module "staging_ec2" {

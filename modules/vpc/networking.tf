@@ -1,5 +1,5 @@
 resource "aws_vpc" "mainvpc" {
-  cidr_block       = var.mainvpc_cidr_block
+  cidr_block       = var.mainvpc_cidr_block                         
   enable_dns_hostnames = true
   instance_tenancy = "default"
 
@@ -10,8 +10,8 @@ resource "aws_vpc" "mainvpc" {
 
 resource "aws_subnet" "PublicSubnet1" {
   vpc_id            = aws_vpc.mainvpc.id
-  cidr_block        = var.PublicSubnet1_cidr_block
-  availability_zone = var.PublicSubnet1_AZ
+  cidr_block        = var.PublicSubnet1["cidr_block"]                   
+  availability_zone = var.PublicSubnet1["AZ"]
 
   tags = {
     Name = "${var.environment}_PublicSubnet1"
@@ -21,8 +21,8 @@ resource "aws_subnet" "PublicSubnet1" {
 resource "aws_subnet" "PrivateSubnetsForDB" {
   count             = 2
   vpc_id            = aws_vpc.mainvpc.id
-  cidr_block        = element(["${var.PrivateSubnet1_cidr_block}", "${var.PrivateSubnet2_cidr_block}"], count.index)
-  availability_zone = element(["${var.PrivateSubnet1_AZ}", "${var.PrivateSubnet2_AZ}"], count.index)
+  cidr_block        = element(["${var.PrivateSubnet1["cidr_block"]}", "${var.PrivateSubnet2["cidr_block"]}"], count.index)
+  availability_zone = element(["${var.PrivateSubnet1["AZ"]}", "${var.PrivateSubnet2["AZ"]}"], count.index)
 
   tags = {
     Name = "${var.environment}_PrivateSubnet${count.index + 1}"

@@ -1,0 +1,37 @@
+name: "Terraform-Infra-Apply-shared-env"
+
+on:
+  push:
+    branches:
+      - shared
+
+jobs:
+  Terraform_resource_creation:
+    name: "Terraform_resource_creation"
+    runs-on: ubuntu-latest
+    env:
+       ENVIRONMENT: shared
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+            cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Create symlink to modules directory from shared directory
+        run: ln -s ../modules ./$ENVIRONMENT/modules
+        if: ${{ github.workspace }}/modules != './$ENVIRONMENT/modules'
+      - name: Terraform Init shared resources
+        id: shared_init
+        run: terraform init
+        working-directory: ./$ENVIRONMENT
+      - name: Terraform Plan shared resources
+        id: shared_plan
+        run: terraform plan
+        working-directory: ./$ENVIRONMENT
+      - name: Terraform apply shared resources
+        id: shared_apply
+        run: terraform apply --auto-approve 
+        working-directory: ./$ENVIRONMENT
