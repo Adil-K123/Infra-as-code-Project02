@@ -15,14 +15,5 @@ variable "PublicSubnet1_id" {
 
 variable "Ec2InstanceCount" {
   type    = number
-  default = 1
+  default = 0
 }
-
-# variable "inventoryfilename" {
-#   type = string
-#   default = ""
-# }
-
-# variable "webServers_PublicIP" {
-#   default = ""
-# }
