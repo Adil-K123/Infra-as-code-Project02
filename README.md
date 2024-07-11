@@ -51,5 +51,6 @@ This repository is my learning project for exploring Infrastructure as Code (IaC
 - Use Python scripts to particular use cases, like one to delete all container images from an AWS ECR repository using boto3, before Terraform destroys the repository to avoid errors caused by existing images.
 
 
-########################################
-Feel free to contribute or raise issues in this repository, as this project is for learning purposes. Your feedback and contributions are highly appreciated!
+## Feel free to contribute or raise issues in this repository!
+## This project is dedicated to learning, and your feedback and contributions are highly appreciated!
+
