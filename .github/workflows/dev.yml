@@ -36,10 +36,10 @@ jobs:
         id: init
         run: terraform init
         working-directory: ./${{ env.ENVIRONMENT }}         
-      - name: Terraform Plan
-        id: plan
-        run: terraform plan
-        working-directory: ./${{ env.ENVIRONMENT }}
+      # - name: Terraform Plan
+      #   id: plan
+      #   run: terraform plan
+      #   working-directory: ./${{ env.ENVIRONMENT }}
       - name: Terraform apply
         run: terraform apply --auto-approve
         working-directory: ./${{ env.ENVIRONMENT }}
